@@ -1,6 +1,5 @@
 use crate::errors::Error;
 use crate::Result;
-use dotenvy::dotenv;
 use std::env;
 use std::str::FromStr;
 use std::sync::OnceLock;
@@ -31,7 +30,7 @@ pub struct Config {
 
 impl Config {
     fn load_from_env() -> Result<Config> {
-        dotenv()?;
+        // dotenv()?;
         Ok(Config {
             WORKER_PORT: get_env_as_parse("WORKER_PORT")?,
             WORK_DIR: "/orders".to_string(),

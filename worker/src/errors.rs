@@ -8,7 +8,6 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug)]
 pub enum Error {
-    Dotenv(dotenvy::Error),
     ConfigMissingEnv(&'static str),
     ConfigWrongFormat(&'static str),
     Io(std::io::Error),
@@ -31,11 +30,6 @@ impl From<SmtpMailerError> for Error {
     }
 }
 
-impl From<dotenvy::Error> for Error {
-    fn from(err: dotenvy::Error) -> Error {
-        Error::Dotenv(err)
-    }
-}
 impl From<std::io::Error> for Error {
     fn from(err: std::io::Error) -> Error {
         Error::Io(err)

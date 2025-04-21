@@ -1,6 +1,5 @@
 use crate::error::Error;
 use crate::error::Result;
-use dotenvy::dotenv;
 use std::env;
 use std::str::FromStr;
 use std::sync::OnceLock;
@@ -39,7 +38,7 @@ pub struct Config {
 
 impl Config {
     fn load_from_env() -> Result<Config> {
-        dotenv().expect("dotenv init failed");
+        // dotenv().expect("dotenv init failed");
         let worker_port = get_env_as_parse("WORKER_PORT")?;
         Ok(Config {
             API_URL: get_env("API_URL")?,

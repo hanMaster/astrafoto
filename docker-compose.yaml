@@ -1,6 +1,6 @@
 services:
   bot:
-    build: ./docker/bot
+    build: ./bot
     container_name: astra-bot
     restart: always
     environment:
@@ -28,7 +28,7 @@ services:
       - worker
 
   worker:
-    build: ./docker/worker
+    build: ./worker
     container_name: astra-worker
     restart: always
     volumes:
