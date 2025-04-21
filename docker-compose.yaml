@@ -1,0 +1,52 @@
+services:
+  bot:
+    build: ./docker/bot
+    container_name: astra-bot
+    restart: always
+    environment:
+      - RUST_LOG
+      - API_URL
+      - ID_INSTANCE
+      - API_TOKEN_INSTANCE
+      - ADMIN_CHAT_ID
+      - WORKER_PORT
+      - SHOP_ADDRESS
+      - SHOP_PHONE
+      - NO_FILES_TIMEOUT
+      - REPEAT_COUNT
+      - REPEAT_TIMEOUT
+      - HOOK_PORT
+      - SECRET_TOKEN
+      - PAPER_PROMPT
+      - SIZE_PROMPT
+      - FILES_DONE_PROMPT
+    ports:
+      - "${HOOK_PORT}:${HOOK_PORT}"
+    networks:
+      - astra_net
+    depends_on:
+      - worker
+
+  worker:
+    build: ./docker/worker
+    container_name: astra-worker
+    restart: always
+    volumes:
+      - ${WORK_DIR}:/orders
+    environment:
+      - RUST_LOG
+      - WORKER_PORT
+      - START_COUNTER
+      - SMTP_SERVER
+      - SMTP_PORT
+      - SENDER_EMAIL
+      - SENDER_PASS
+      - RECEIVER_EMAIL
+    ports:
+      - "${WORKER_PORT}:${WORKER_PORT}"
+    networks:
+      - astra_net
+
+networks:
+  astra_net:
+    driver: bridge
