@@ -1,6 +1,7 @@
 services:
   bot:
-    build: ./bot
+#    build: ./bot
+    image: hanmaster/astrafoto-bot
     container_name: astra-bot
     restart: always
     environment:
@@ -28,7 +29,8 @@ services:
       - worker
 
   worker:
-    build: ./worker
+#    build: ./worker
+    image: hanmaster/astrafoto-worker
     container_name: astra-worker
     restart: always
     volumes:
