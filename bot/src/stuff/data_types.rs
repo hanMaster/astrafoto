@@ -53,6 +53,7 @@ pub enum OrderState {
         chat_id: String,
         customer_name: String,
         files: Vec<String>,
+        repeats: i32,
         last_msg_time: Timestamp,
         first_prompt_sent: bool,
     },
@@ -87,6 +88,7 @@ impl OrderState {
             chat_id: msg.chat_id,
             customer_name: msg.customer_name,
             files: vec![msg.message],
+            repeats: 0,
             last_msg_time: Timestamp::now(),
             first_prompt_sent: false,
         }
@@ -97,6 +99,7 @@ impl OrderState {
             chat_id: msg.chat_id,
             customer_name: msg.customer_name,
             files: vec![],
+            repeats: 0,
             last_msg_time: Timestamp::now(),
             first_prompt_sent: true,
         }
@@ -159,6 +162,7 @@ impl OrderState {
                     chat_id: chat_id.clone(),
                     customer_name: customer_name.clone(),
                     files: files.clone(),
+                    repeats: 0,
                     last_msg_time: Timestamp::now(),
                     first_prompt_sent: false,
                 }
@@ -174,6 +178,7 @@ impl OrderState {
                     chat_id: chat_id.clone(),
                     customer_name: customer_name.clone(),
                     files: files.clone(),
+                    repeats: 0,
                     last_msg_time: Timestamp::now(),
                     first_prompt_sent: false,
                 }
@@ -265,7 +270,13 @@ impl OrderState {
 
     pub fn requested(&mut self) {
         match self {
-            OrderState::FilesReceiving { .. } => {}
+            OrderState::FilesReceiving {
+                repeats,
+                last_msg_time, ..
+            } => {
+                *repeats += 1;
+                *last_msg_time = Timestamp::now();
+            }
             OrderState::RaperRequested {
                 repeats,
                 last_msg_time,
