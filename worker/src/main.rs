@@ -4,6 +4,7 @@ pub use errors::Result;
 use std::net::SocketAddr;
 use log::info;
 use tokio::net::TcpListener;
+use crate::stuff::shutdown_signal;
 
 mod errors;
 mod stuff;
@@ -17,7 +18,9 @@ async fn main() -> Result<()> {
     let listener = TcpListener::bind(addr).await?;
     let app = get_router(state);
     info!("Server started on port {}", port);
-    axum::serve(listener, app).await?;
+    axum::serve(listener, app)
+        .with_graceful_shutdown(shutdown_signal())
+        .await?;
     Ok(())
 }
 

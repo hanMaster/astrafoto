@@ -15,7 +15,7 @@ services:
       - bot
   bot:
 #    build: ./bot
-    image: hanmaster/astrafoto-bot:latest
+    image: hanmaster/bot:latest
     hostname: astra-bot
     container_name: astra-bot
     restart: always
@@ -45,7 +45,7 @@ services:
 
   worker:
 #    build: ./worker
-    image: hanmaster/astrafoto-worker:latest
+    image: hanmaster/worker:latest
     hostname: astra-worker
     container_name: astra-worker
     restart: always
