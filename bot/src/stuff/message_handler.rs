@@ -279,11 +279,15 @@ where
             match o.have_files() {
                 true => {
                     if let OrderState::FilesReceiving {
-                        first_prompt_sent, ..
+                        repeats,
+                        first_prompt_sent,
+                        ..
                     } = o
                     {
-                        self.send_receive_file_confirmation(o.get_chat_id(), o.files_count())
-                            .await;
+                        if repeats == 0 {
+                            self.send_receive_file_confirmation(o.get_chat_id(), o.files_count())
+                                .await;
+                        }
                         if !first_prompt_sent {
                             self.send_files_done(o.get_chat_id()).await;
                             let mut clonned = o.clone();
