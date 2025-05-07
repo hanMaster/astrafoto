@@ -134,7 +134,7 @@ impl OrderState {
 
     pub fn repeats(&self) -> i32 {
         match self {
-            OrderState::FilesReceiving { .. } => 0,
+            OrderState::FilesReceiving { repeats, .. } => *repeats,
             OrderState::RaperRequested { repeats, .. } => *repeats,
             OrderState::SizeRequested { repeats, .. } => *repeats,
             OrderState::SizeSelected { .. } => 0,

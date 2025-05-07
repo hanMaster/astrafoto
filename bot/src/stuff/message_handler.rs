@@ -4,7 +4,7 @@ use crate::stuff::error::{Error, Result};
 use crate::stuff::prompt::Prompt;
 use crate::stuff::repository::Repository;
 use crate::stuff::transport::Transport;
-use log::{error, info};
+use log::{debug, error, info};
 
 pub trait MessageHandler {
     fn handle(&mut self, message: Message) -> impl Future<Output = Result<()>> + Send;
@@ -279,12 +279,11 @@ where
             match o.have_files() {
                 true => {
                     if let OrderState::FilesReceiving {
-                        repeats,
                         first_prompt_sent,
                         ..
                     } = o
                     {
-                        if repeats == 0 {
+                        if o.repeats() == 0 {
                             self.send_receive_file_confirmation(o.get_chat_id(), o.files_count())
                                 .await;
                         }
@@ -328,7 +327,8 @@ where
                     } else if o.repeats() < config().REPEAT_COUNT
                         && o.last_time_sec() <= config().REPEAT_TIMEOUT
                     {
-                        info!("Just wait\n{:?}", o);
+                        debug!("repeats: {}, repeat_count: {} last_time_sec: {}", o.repeats(), config().REPEAT_COUNT, o.last_time_sec());
+                        debug!("Just wait\n{:?}", o);
                     } else {
                         info!("orders_to_remove\n{:?}", o);
                         orders_to_remove.push(o.get_chat_id());
