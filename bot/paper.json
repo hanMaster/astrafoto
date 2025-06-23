@@ -11,12 +11,32 @@
         "price": 30
       },
       {
+        "size": "15x20",
+        "price": 34
+      },
+      {
         "size": "15x21",
         "price": 36
       },
       {
         "size": "15x23",
         "price": 40
+      },
+      {
+        "size": "20x30",
+        "price": 70
+      },
+      {
+        "size": "20x31",
+        "price": 75
+      },
+      {
+        "size": "30x40",
+        "price": 138
+      },
+      {
+        "size": "30x45",
+        "price": 170
       }
     ]
   },
@@ -36,8 +56,36 @@
         "price": 22
       },
       {
+        "size": "13x18",
+        "price": 30
+      },
+      {
+        "size": "15x20",
+        "price": 34
+      },
+      {
         "size": "15x21",
         "price": 36
+      },
+      {
+        "size": "15x23",
+        "price": 40
+      },
+      {
+        "size": "20x30",
+        "price": 70
+      },
+      {
+        "size": "20x31",
+        "price": 75
+      },
+      {
+        "size": "30x40",
+        "price": 138
+      },
+      {
+        "size": "30x45",
+        "price": 170
       }
     ]
   },
